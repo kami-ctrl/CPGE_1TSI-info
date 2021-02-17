@@ -1,5 +1,6 @@
+
 """
-_______________________________________________variable utile______________________________________
+_________________________variable utile______________________
 """
 
 alpha = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
@@ -8,7 +9,7 @@ I = [0, 1, 2, 3, 4, 5, 6, 7]
 
 
 """
-____________________________________________fcts auxiliaires_______________________________________
+____________________fcts auxiliaires______________________
 """
 def identificateur(arg):
     objet = arg[0:2]
@@ -27,22 +28,36 @@ def placeur(arg, symb, matrice):
     return matrice
 
 """
-________________________________________________chess class def_____________________________
+________________________chess class def_________________
 """
 
 class pion_blanc:
     number = 9817
     def mvt(self,arg):
+        prise = []
         col = arg[0]
         lig = int(arg[1])
-
         assert lig != 1, "pas de pion blanc dans la ligne 1 "
         if lig == 2:
             lig, lig_2 = str(lig + 2), str(lig + 1)
-            return [col + lig, col + lig_2]
+            a = num.index(arg[1])
+            b = alpha.index(col) +1
+            b_1 = alpha.index(col) -1
+            if b in I:
+                prise.append(alpha[b]+num[int(a)-1])
+            if b_1 in I:
+                prise.append(alpha[b_1]+num[int(a)-1])
+            return [col + lig, col + lig_2],prise
         elif lig < 8:
             lig = str(lig + 1)
-            return [col + lig]
+            a = num.index(arg[1])
+            b = alpha.index(col) + 1
+            b_1 = alpha.index(col) - 1
+            if b in I:
+                prise.append(alpha[b] + num[int(a)-1])
+            if b_1 in I:
+                prise.append(alpha[b_1] + num[int(a)-1])
+            return [col + lig],prise
         elif lig == 8:
             return []
 
@@ -50,15 +65,30 @@ class pion_blanc:
 class pion_noir:
     number = 9823
     def mvt(self,arg):
+        prise = []
         col = arg[0]
         lig = int(arg[1])
         assert lig != 8, "pas de pion noir a la ligne 8 "
         if lig == 7:
             lig, lig_2 = str(lig - 2), str(lig - 1)
-            return [col + lig, col + lig_2]
+            a = num.index(arg[1])
+            b = alpha.index(col) + 1
+            b_1 = alpha.index(col) - 1
+            if b in I:
+                prise.append(alpha[b] + num[int(a)+1])
+            if b_1 in I:
+                prise.append(alpha[b_1] + num[int(a)+1])
+            return [col + lig, col + lig_2],prise
         elif lig > 1:
             lig = str(lig - 1)
-            return [col + lig]
+            a = num.index(arg[1])
+            b = alpha.index(col) + 1
+            b_1 = alpha.index(col) - 1
+            if b in I:
+                prise.append(alpha[b] + num[int(a)+1])
+            if b_1 in I:
+                prise.append(alpha[b_1] + num[int(a)+1])
+            return [col + lig],prise
         elif lig == 1:
             return []
 
@@ -248,12 +278,15 @@ class cavalier_noir:
         return res
 
 """
-___________________________________main proramme___________________________________________
+____________________main proramme__________________________
 """
 
 def deplacer(arg):
     objet = identificateur(arg)
     coor = arg[2::]
+    place = objet.mvt(objet,coor)
+    if len(place) == 2 :
+        return place[0]
     return objet.mvt(objet,coor)
 
 
@@ -267,10 +300,14 @@ def afficher(arg):
                ['_', '_', '_', '_', '_', '_', '_', '_'],
                ['_', '_', '_', '_', '_', '_', '_', '_']]
     coor = arg[2::]
-    symbole = chr(identificateur(arg).number)
-    possibilite = deplacer(arg)
+    objet = identificateur(arg)
+    symbole = chr(objet.number)
+    possibilite = objet.mvt(objet,coor)
+    if len(possibilite) == 2 :
+        for i in possibilite[1]:
+            matrice=placeur(i,'●',matrice)
+        possibilite = possibilite[0]
     for i in possibilite:
         matrice = placeur(i, "x", matrice)
     matrice = placeur(coor, symbole, matrice)
     return matrice
-
