@@ -31,8 +31,10 @@ def placeur(arg, symb, matrice):
 ________________________chess class def_________________
 """
 
+
 class pion_blanc:
     number = 9817
+
     def mvt(self,arg):
         prise = []
         col = arg[0]
@@ -64,6 +66,7 @@ class pion_blanc:
 
 class pion_noir:
     number = 9823
+
     def mvt(self,arg):
         prise = []
         col = arg[0]
@@ -95,6 +98,7 @@ class pion_noir:
 
 class roi_blanc:
     number = 9812
+
     def mvt(self,arg):
         res = []
         col = alpha.index(arg[0])
@@ -116,6 +120,7 @@ class roi_blanc:
 
 class roi_noir:
     number = 9818
+
     def mvt(self,arg):
         res = []
         col = alpha.index(arg[0])
@@ -137,6 +142,7 @@ class roi_noir:
 
 class tour_blanche:
     number = 9814
+
     def mvt(self,arg):
         res = [arg[0]+i for i in num if i != arg[1]]
         res+=[i+arg[1] for i in alpha if i != arg[0]]
@@ -145,13 +151,16 @@ class tour_blanche:
 
 class tour_noire:
     number = 9820
+
     def mvt(self,arg):
-        res = [self[0] + i for i in num if i != self[1]]
-        res += [i + self[1] for i in alpha if i != self[0]]
+        res = [arg[0] + i for i in num if i != arg[1]]
+        res += [i + arg[1] for i in alpha if i != arg[0]]
         return res
+
 
 class fou_blanc:
     number = 9815
+
     def mvt(self,arg):
         res = []
         col = alpha.index(arg[0])
@@ -174,6 +183,7 @@ class fou_blanc:
 
 class fou_noir:
     number = 9821
+
     def mvt(self,arg):
         res = []
         col = alpha.index(arg[0])
@@ -192,9 +202,11 @@ class fou_noir:
             if c in I and d in I:
                 res.append(alpha[c] + num[d])
         return res
+
 
 class dame_blanche:
     number = 9813
+
     def mvt(self,arg):
         res = []
         col = alpha.index(arg[0])
@@ -215,9 +227,11 @@ class dame_blanche:
         res += [arg[0] + i for i in num if i != arg[1]]
         res += [i + arg[1] for i in alpha if i != arg[0]]
         return res
+
 
 class dame_noire:
     number = 9819
+
     def mvt(self,arg):
         res = []
         col = alpha.index(arg[0])
@@ -239,8 +253,10 @@ class dame_noire:
         res += [i + arg[1] for i in alpha if i != arg[0]]
         return res
 
+
 class cavalier_blanc:
     number = 9816
+
     def mvt(self,arg):
         res = []
         col = arg[0]
@@ -258,8 +274,10 @@ class cavalier_blanc:
                 res.append(alpha[a] + num[b])
         return res
 
+
 class cavalier_noir:
     number = 9822
+
     def mvt(self,arg):
         res = []
         col = arg[0]
@@ -281,12 +299,10 @@ class cavalier_noir:
 ____________________main proramme__________________________
 """
 
+
 def deplacer(arg):
     objet = identificateur(arg)
     coor = arg[2::]
-    place = objet.mvt(objet,coor)
-    if len(place) == 2 :
-        return place[0]
     return objet.mvt(objet,coor)
 
 
