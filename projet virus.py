@@ -46,7 +46,7 @@ def afficher(matrice):
         print(i, end="\n")
 
 
-def jouer(n):
+def jouer(n=7): #par defaut c'est la taille 7x7
     virus.start(virus, n)
     player_1 = pion("blanc")
     player_2 = pion('noir')
