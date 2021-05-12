@@ -1,3 +1,13 @@
+# ------------------------------------source------------------------------------------
+"""
+
+python source code
+link = https://github.com/kami-ctrl/CPGE_1TSI-info/blob/main/TP12.py
+
+"""
+
+
+# ----------------------------------pile class----------------------------------------
 class Pile:
     def __init__(self):
         self.stack = []
@@ -6,7 +16,7 @@ class Pile:
         self.stack.append(code)
 
     def retirer(self):
-        self.stack.pop()
+        return self.stack.pop()
 
     def dernier(self):
         return self.stack[-1] if len(self.stack) != 0 else None
@@ -78,8 +88,8 @@ def evaluer(expression):
     pile = Pile()
     for i in expression:
         if estOperateur(i):
-            a = pile.stack.pop()
-            b = pile.stack.pop()
+            a = pile.retirer()
+            b = pile.retirer()
             c = eval(a + i + b)
             pile.ajouter(str(c))
         else:
@@ -91,13 +101,3 @@ if __name__ == "__main__":
     import doctest
 
     doctest.testmod(verbose=True)
-
-
-
-
-
-
-
-
-
-
